@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Teen Advice</title>
     <style>
@@ -7,6 +8,15 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #474747;
+        }
+
+        .container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
 
@@ -47,11 +57,12 @@
 </head>
 
 <body>
-    <h1>Teen Advice</h1>
-    <div id="advice"></div>
-    <div id="emoji"></div>
-    <button id="newAdviceButton">Click to Get New Advice</button>
-
+    <div class="container">
+        <h1>Teen Advice</h1>
+        <div id="advice"></div>
+        <div id="emoji"></div>
+        <button id="newAdviceButton">Click to Get New Advice</button>
+    </div>
     <script>
         const adviceElement = document.getElementById('advice');
         const emojiElement = document.getElementById('emoji');
@@ -109,4 +120,5 @@
     </script>
     <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

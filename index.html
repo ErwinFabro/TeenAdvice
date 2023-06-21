@@ -1,540 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Teen Advice</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    
-    h1 {
-      color: #FF0000;
-    }
-    
-    #advice {
-      margin: 50px auto;
-      width: 400px;
-      padding: 20px;
-      border: 2px solid #FF0000;
-      border-radius: 10px;
-      background-color: #FFF8F8;
-      transition: background-color 0.3s ease-in-out;
-    }
-    
-    #emoji {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-    
-    #newAdviceButton {
-      padding: 10px 20px;
-      background-color: #FF0000;
-      color: #FFFFFF;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <h1>Teen Advice</h1>
-  <div id="advice"></div>
-  <div id="emoji"></div>
-  <button id="newAdviceButton">Get New Advice</button>
+    <title>Teen Advice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #474747;
+        }
 
-  <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
-  <script>
-    const adviceElement = document.getElementById('advice');
-    const emojiElement = document.getElementById('emoji');
-    const newAdviceButton = document.getElementById('newAdviceButton');
-    
-    // Función para obtener un consejo aleatorio
-    function getRandomAdvice() {
-      fetch('https://api.adviceslip.com/advice')
-        .then(response => response.json())
-        .then(data => {
-          const advice = data.slip.advice;
-          adviceElement.textContent = advice;
-          analyzeAdvice(advice);
-        })
-        .catch(error => {
-          console.log('Error:', error);
-        });
-    }
-    
-    // Función para analizar el consejo y seleccionar un emoji relacionado
-    function analyzeAdvice(advice) {
-        const keywords = [
-            { word: 'love', emoji: '❤️' },
-            { word: 'friendship', emoji: '🤝' },
-            { word: 'study', emoji: '📚' },
-            { word: 'success', emoji: '🎉' },
-            { word: 'happiness', emoji: '😄' },
-            { word: 'inspiration', emoji: '💡' },
-            { word: 'adventure', emoji: '⛺️' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌟' },
-            { word: 'motivation', emoji: '🔥' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'gratitude', emoji: '🙏' },
-            { word: 'dream', emoji: '💭' },
-            { word: 'laughter', emoji: '😆' },
-            { word: 'hope', emoji: '🌈' },
-            { word: 'ambition', emoji: '💪' },
-            { word: 'positivity', emoji: '✨' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'patience', emoji: '⌛️' },
-            { word: 'courage', emoji: '🦁' },
-            { word: 'grace', emoji: '🕊️' },
-            { word: 'victory', emoji: '🏆' },
-            { word: 'perseverance', emoji: '🚀' },
-            { word: 'kindness', emoji: '🌻' },
-            { word: 'wisdom', emoji: '📖' },
-            { word: 'effort', emoji: '💪' },
-            { word: 'celebration', emoji: '🥳' },
-            { word: 'curiosity', emoji: '🔍' },
-            { word: 'harmony', emoji: '🎶' },
-            { word: 'resilience', emoji: '🌱' },
-            { word: 'serenity', emoji: '🧘' },
-            { word: 'optimism', emoji: '🌞' },
-            { word: 'compassion', emoji: '🤗' },
-            { word: 'purpose', emoji: '🎯' },
-            { word: 'imagination', emoji: '🌠' },
-            { word: 'confidence', emoji: '💃' },
-            { word: 'unity', emoji: '🌍' },
-            { word: 'growth', emoji: '🌱' },
-            { word: 'blessing', emoji: '🙌' },
-            { word: 'calm', emoji: '😌' },
-            { word: 'abundance', emoji: '💰' },
-            { word: 'graceful', emoji: '🦢' },
-            { word: 'curiosity', emoji: '🔬' },
-            { word: 'excellence', emoji: '🏅' },
-            { word: 'forgiveness', emoji: '🤝' },
-            { word: 'humor', emoji: '😄' },
-            { word: 'generosity', emoji: '🎁' },
-            { word: 'insight', emoji: '🔍' },
-            { word: 'simplicity', emoji: '🌿' },
-            { word: 'self-care', emoji: '🛀' },
-            { word: 'grateful', emoji: '🙏' },
-            { word: 'laughter', emoji: '🤣' },
-            { word: 'vitality', emoji: '🌞' },
-            { word: 'tranquility', emoji: '🌊' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'adventure', emoji: '🌍' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'perseverance', emoji: '💫' },
-            { word: 'freedom', emoji: '🕊️' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'passion', emoji: '🔥' },
-            { word: 'innovation', emoji: '🚀' },
-            { word: 'resilience', emoji: '🌱' },
-            { word: 'self-love', emoji: '💗' },
-            { word: 'confidence', emoji: '🦚' },
-            { word: 'grace', emoji: '💫' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'bravery', emoji: '🦁' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌸' },
-            { word: 'ambition', emoji: '💼' },
-            { word: 'positivity', emoji: '☀️' },
-            { word: 'sincerity', emoji: '🤝' },
-            { word: 'growth', emoji: '🌿' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'empowerment', emoji: '💪' },
-            { word: 'serenity', emoji: '🌌' },
-            { word: 'optimism', emoji: '🌈' },
-            { word: 'compassion', emoji: '❤️' },
-            { word: 'dream', emoji: '💭' },
-            { word: 'laughter', emoji: '😂' },
-            { word: 'joy', emoji: '🌞' },
-            { word: 'resilience', emoji: '🌈' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'curiosity', emoji: '🔮' },
-            { word: 'self-care', emoji: '💆' },
-            { word: 'perseverance', emoji: '🏃' },
-            { word: 'wisdom', emoji: '🧠' },
-            { word: 'confidence', emoji: '💃' },
-            { word: 'kindness', emoji: '🌺' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'abundance', emoji: '🌻' },
-            { word: 'harmony', emoji: '🎶' },
-            { word: 'growth', emoji: '🌱' },
-            { word: 'inspiration', emoji: '🌠' },
-            { word: 'purpose', emoji: '🌟' },
-            { word: 'grace', emoji: '🦢' },
-            { word: 'laughter', emoji: '😆' },
-            { word: 'friendship', emoji: '👭' },
-            { word: 'serenity', emoji: '🌊' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'motivation', emoji: '💪' },
-            { word: 'gratitude', emoji: '🙏' },
-            { word: 'wisdom', emoji: '📖' },
-            { word: 'kindness', emoji: '🌼' },
-            { word: 'success', emoji: '🌟' },
-            { word: 'love', emoji: '💕' },
-            { word: 'peace', emoji: '☮️' },
-            { word: 'happiness', emoji: '😃' },
-            { word: 'adventure', emoji: '🌍' },
-            { word: 'confidence', emoji: '🚀' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'optimism', emoji: '🌈' },
-            { word: 'growth', emoji: '🌱' },
-            { word: 'perseverance', emoji: '🌟' },
-            { word: 'grace', emoji: '🦋' },
-            { word: 'inspiration', emoji: '🌞' },
-            { word: 'friendship', emoji: '🤗' },
-            { word: 'laughter', emoji: '😄' },
-            { word: 'courage', emoji: '🦁' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎭' },
-            { word: 'kindness', emoji: '🌺' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌈' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👫' },
-            { word: 'laughter', emoji: '😆' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📖' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌻' },
-            { word: 'motivation', emoji: '💪' },
-            { word: 'happiness', emoji: '😃' },
-            { word: 'gratitude', emoji: '🙏' },
-            { word: 'dream', emoji: '💭' },
-            { word: 'joy', emoji: '🌞' },
-            { word: 'peace', emoji: '☮️' },
-            { word: 'love', emoji: '❤️' },
-            { word: 'success', emoji: '🌟' },
-            { word: 'adventure', emoji: '🌍' },
-            { word: 'confidence', emoji: '🚀' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'optimism', emoji: '🌈' },
-            { word: 'growth', emoji: '🌱' },
-            { word: 'perseverance', emoji: '💫' },
-            { word: 'grace', emoji: '🦚' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '🤝' },
-            { word: 'laughter', emoji: '😂' },
-            { word: 'courage', emoji: '🦁' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌸' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌞' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👭' },
-            { word: 'laughter', emoji: '😄' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📖' },
-            { word: 'creativity', emoji: '🎭' },
-            { word: 'kindness', emoji: '🌺' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌈' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👫' },
-            { word: 'laughter', emoji: '😆' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌻' },
-            { word: 'motivation', emoji: '💪' },
-            { word: 'happiness', emoji: '😃' },
-            { word: 'gratitude', emoji: '🙏' },
-            { word: 'dream', emoji: '💭' },
-            { word: 'joy', emoji: '🌞' },
-            { word: 'peace', emoji: '☮️' },
-            { word: 'love', emoji: '❤️' },
-            { word: 'success', emoji: '🌟' },
-            { word: 'adventure', emoji: '🌍' },
-            { word: 'confidence', emoji: '🚀' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'optimism', emoji: '🌈' },
-            { word: 'growth', emoji: '🌱' },
-            { word: 'perseverance', emoji: '💫' },
-            { word: 'grace', emoji: '🦚' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '🤝' },
-            { word: 'laughter', emoji: '😂' },
-            { word: 'courage', emoji: '🦁' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌸' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌞' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👭' },
-            { word: 'laughter', emoji: '😄' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📖' },
-            { word: 'creativity', emoji: '🎭' },
-            { word: 'kindness', emoji: '🌺' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌈' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👫' },
-            { word: 'laughter', emoji: '😆' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌻' },
-            { word: 'motivation', emoji: '💪' },
-            { word: 'happiness', emoji: '😃' },
-            { word: 'gratitude', emoji: '🙏' },
-            { word: 'dream', emoji: '💭' },
-            { word: 'joy', emoji: '🌞' },
-            { word: 'peace', emoji: '☮️' },
-            { word: 'love', emoji: '❤️' },
-            { word: 'success', emoji: '🌟' },
-            { word: 'adventure', emoji: '🌍' },
-            { word: 'confidence', emoji: '🚀' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'optimism', emoji: '🌈' },
-            { word: 'growth', emoji: '🌱' },
-            { word: 'perseverance', emoji: '💫' },
-            { word: 'grace', emoji: '🦚' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '🤝' },
-            { word: 'laughter', emoji: '😂' },
-            { word: 'courage', emoji: '🦁' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌸' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌞' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👭' },
-            { word: 'laughter', emoji: '😄' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📖' },
-            { word: 'creativity', emoji: '🎭' },
-            { word: 'kindness', emoji: '🌺' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌈' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👫' },
-            { word: 'laughter', emoji: '😆' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌻' },
-            { word: 'motivation', emoji: '💪' },
-            { word: 'happiness', emoji: '😃' },
-            { word: 'gratitude', emoji: '🙏' },
-            { word: 'dream', emoji: '💭' },
-            { word: 'joy', emoji: '🌞' },
-            { word: 'peace', emoji: '☮️' },
-            { word: 'love', emoji: '❤️' },
-            { word: 'success', emoji: '🌟' },
-            { word: 'adventure', emoji: '🌍' },
-            { word: 'confidence', emoji: '🚀' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'optimism', emoji: '🌈' },
-            { word: 'growth', emoji: '🌱' },
-            { word: 'perseverance', emoji: '💫' },
-            { word: 'grace', emoji: '🦚' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '🤝' },
-            { word: 'laughter', emoji: '😂' },
-            { word: 'courage', emoji: '🦁' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌸' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌞' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👭' },
-            { word: 'laughter', emoji: '😄' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📖' },
-            { word: 'creativity', emoji: '🎭' },
-            { word: 'kindness', emoji: '🌺' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌈' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👫' },
-            { word: 'laughter', emoji: '😆' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌻' },
-            { word: 'motivation', emoji: '💪' },
-            { word: 'happiness', emoji: '😃' },
-            { word: 'gratitude', emoji: '🙏' },
-            { word: 'dream', emoji: '💭' },
-            { word: 'joy', emoji: '🌞' },
-            { word: 'peace', emoji: '☮️' },
-            { word: 'love', emoji: '❤️' },
-            { word: 'success', emoji: '🌟' },
-            { word: 'adventure', emoji: '🌍' },
-            { word: 'confidence', emoji: '🚀' },
-            { word: 'balance', emoji: '⚖️' },
-            { word: 'optimism', emoji: '🌈' },
-            { word: 'growth', emoji: '🌱' },
-            { word: 'perseverance', emoji: '💫' },
-            { word: 'grace', emoji: '🦚' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '🤝' },
-            { word: 'laughter', emoji: '😂' },
-            { word: 'courage', emoji: '🦁' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌸' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌞' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👭' },
-            { word: 'laughter', emoji: '😄' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📖' },
-            { word: 'creativity', emoji: '🎭' },
-            { word: 'kindness', emoji: '🌺' },
-            { word: 'motivation', emoji: '💥' },
-            { word: 'happiness', emoji: '🌈' },
-            { word: 'gratitude', emoji: '🙌' },
-            { word: 'dream', emoji: '💫' },
-            { word: 'joy', emoji: '😊' },
-            { word: 'peace', emoji: '✌️' },
-            { word: 'love', emoji: '💖' },
-            { word: 'success', emoji: '🎯' },
-            { word: 'adventure', emoji: '⛰️' },
-            { word: 'confidence', emoji: '🔥' },
-            { word: 'harmony', emoji: '🎵' },
-            { word: 'growth', emoji: '🌳' },
-            { word: 'inspiration', emoji: '✨' },
-            { word: 'friendship', emoji: '👫' },
-            { word: 'laughter', emoji: '😆' },
-            { word: 'courage', emoji: '🌟' },
-            { word: 'wisdom', emoji: '📚' },
-            { word: 'creativity', emoji: '🎨' },
-            { word: 'kindness', emoji: '🌻' },
-            { word: 'motivation', emoji: '💪' },
+
+
+        h1 {
+            margin-top: 0;
+            font-size: 3.052rem;
+            color: #cc527a;
+        }
+
+
+
+        #advice {
+            margin: 50px auto;
+            width: 400px;
+            padding: 20px;
+            border: 2px solid #cc527a;
+            border-radius: 10px;
+            background-color: #FFF8F8;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #emoji {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        #newAdviceButton {
+            padding: 10px 20px;
+            background-color: #cc527a;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Teen Advice</h1>
+    <div id="advice"></div>
+    <div id="emoji"></div>
+    <button id="newAdviceButton">Click to Get New Advice</button>
+
+    <script>
+        const adviceElement = document.getElementById('advice');
+        const emojiElement = document.getElementById('emoji');
+        const newAdviceButton = document.getElementById('newAdviceButton');
+
+        // Función para obtener un consejo aleatorio
+        function getRandomAdvice() {
+            fetch('https://api.adviceslip.com/advice')
+                .then(response => response.json())
+                .then(data => {
+                    const advice = data.slip.advice;
+                    adviceElement.textContent = advice;
+                    analyzeAdvice(advice);
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+        }
+
+        // Función para analizar el consejo y seleccionar un emoji relacionado
+        function analyzeAdvice(advice) {
+            const keywords = [
+                { word: 'love', emoji: '❤️' },
+                { word: 'friendship', emoji: '🤝' },
+                { word: 'study', emoji: '📚' },
+                { word: 'success', emoji: '🎉' },
+                { word: 'happiness', emoji: '😄' },
+                { word: 'inspiration', emoji: '💡' },
+                { word: 'adventure', emoji: '⛺️' },
+                { word: 'creativity', emoji: '🎨' },
+                { word: 'kindness', emoji: '🌟' },
             ];
 
 
-      let matchedEmoji = null;
-      keywords.forEach(keyword => {
-        const regex = new RegExp(`\\b${keyword.word}\\b`, 'i');
-        if (regex.test(advice)) {
-          matchedEmoji = keyword.emoji;
-        }
-      });
+            let matchedEmoji = null;
+            keywords.forEach(keyword => {
+                const regex = new RegExp(`\\b${keyword.word}\\b`, 'i');
+                if (regex.test(advice)) {
+                    matchedEmoji = keyword.emoji;
+                }
+            });
 
-      if (matchedEmoji) {
-        emojiElement.innerHTML = twemoji.parse(matchedEmoji);
-      } else {
-        emojiElement.innerHTML = twemoji.parse('🤷‍♀️');
-      }
-    }
-    
-    // Evento de clic para obtener un nuevo consejo
-    newAdviceButton.addEventListener('click', getRandomAdvice);
-    
-    // Obtener un consejo al cargar la página
-    getRandomAdvice();
-  </script>
+            if (matchedEmoji) {
+                emojiElement.innerHTML = twemoji.parse(matchedEmoji);
+            } else {
+                emojiElement.innerHTML = twemoji.parse('🤷‍♀️');
+            }
+        }
+
+        // Evento de clic para obtener un nuevo consejo
+        newAdviceButton.addEventListener('click', getRandomAdvice);
+
+        // Obtener un consejo al cargar la página
+        getRandomAdvice();
+    </script>
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

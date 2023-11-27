@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/ErwinFabro/PortfolioErwin/build/static/css/main.c420f5a4.css",
+    "main.js": "/ErwinFabro/PortfolioErwin/build/static/js/main.68fb827b.js",
+    "static/js/787.f65504af.chunk.js": "/ErwinFabro/PortfolioErwin/build/static/js/787.f65504af.chunk.js",
+    "static/media/avatar.png": "/ErwinFabro/PortfolioErwin/build/static/media/avatar.eec9e12576881e3344a5.png",
+    "index.html": "/ErwinFabro/PortfolioErwin/build/index.html",
+    "main.c420f5a4.css.map": "/ErwinFabro/PortfolioErwin/build/static/css/main.c420f5a4.css.map",
+    "main.68fb827b.js.map": "/ErwinFabro/PortfolioErwin/build/static/js/main.68fb827b.js.map",
+    "787.f65504af.chunk.js.map": "/ErwinFabro/PortfolioErwin/build/static/js/787.f65504af.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c420f5a4.css",
+    "static/js/main.68fb827b.js"
+  ]
+}

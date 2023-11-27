@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Teen Advice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #474747;
+        }
+
+        .container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+
+
+        h1 {
+            margin-top: 0;
+            font-size: 3.052rem;
+            color: #cc527a;
+        }
+
+
+
+        #advice {
+            margin: 50px auto;
+            width: 400px;
+            padding: 20px;
+            border: 2px solid #cc527a;
+            border-radius: 10px;
+            background-color: #FFF8F8;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #emoji {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        #newAdviceButton {
+            padding: 10px 20px;
+            background-color: #cc527a;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Teen Advice</h1>
+        <div id="advice"></div>
+        <div id="emoji"></div>
+        <button id="newAdviceButton">Click to Get New Advice</button>
+    </div>
+    <script>
+        const adviceElement = document.getElementById('advice');
+        const emojiElement = document.getElementById('emoji');
+        const newAdviceButton = document.getElementById('newAdviceButton');
+
+        // Función para obtener un consejo aleatorio
+        function getRandomAdvice() {
+            fetch('https://api.adviceslip.com/advice')
+                .then(response => response.json())
+                .then(data => {
+                    const advice = data.slip.advice;
+                    adviceElement.textContent = advice;
+                    analyzeAdvice(advice);
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+        }
+
+        // Función para analizar el consejo y seleccionar un emoji relacionado
+        function analyzeAdvice(advice) {
+            const keywords = [
+                { word: 'love', emoji: '❤️' },
+                { word: 'friendship', emoji: '🤝' },
+                { word: 'study', emoji: '📚' },
+                { word: 'success', emoji: '🎉' },
+                { word: 'happiness', emoji: '😄' },
+                { word: 'inspiration', emoji: '💡' },
+                { word: 'adventure', emoji: '⛺️' },
+                { word: 'creativity', emoji: '🎨' },
+                { word: 'kindness', emoji: '🌟' },
+            ];
+
+
+            let matchedEmoji = null;
+            keywords.forEach(keyword => {
+                const regex = new RegExp(`\\b${keyword.word}\\b`, 'i');
+                if (regex.test(advice)) {
+                    matchedEmoji = keyword.emoji;
+                }
+            });
+
+            if (matchedEmoji) {
+                emojiElement.innerHTML = twemoji.parse(matchedEmoji);
+            } else {
+                emojiElement.innerHTML = twemoji.parse('🤷‍♀️');
+            }
+        }
+
+        // Evento de clic para obtener un nuevo consejo
+        newAdviceButton.addEventListener('click', getRandomAdvice);
+
+        // Obtener un consejo al cargar la página
+        getRandomAdvice();
+    </script>
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
